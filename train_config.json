@@ -1,0 +1,19 @@
+{
+	"project_path": "D:/facade-segmentation",
+	"input_shape": [512, 512],
+	"train_pairs_path": "data/train_pairs.json",
+	"val_pairs_path": "data/val_pairs.json",
+	"epochs": 1,
+	"batch_size": 4,
+	"train_steps": 100,
+	"val_steps": 20,
+	"optimizer": "adam",
+	"loss": "binary_crossentropy",
+	"metrics": ["accuracy", "precision", "recall"],
+	"checkpoint": 0,
+	"checkpoint_folder": "weights/checkpoint",
+	"load_weights": 0,
+	"weights_load_path": "weights/train_weights.h5",
+	"weights_save_path": "weights/eval_weights.h5",
+	"train_log_folder": "results/training"
+}
