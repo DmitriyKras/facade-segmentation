@@ -12,3 +12,10 @@ Config files `prepare_config.json`, `train_config.json` and `evaluate_config.jso
 
 ## Data preparation
 CMP Facade dataset has 12 classes with different parts of facade. We are interested in only windows, so `utils/process_masks.py` used to prepare masks for our task. Now all masks contain 255 at windows and 0 at other locations. Processed dataset is available at my Kaggle profile: ... . To generate train, val and test pairs make changes at `prepare_config.json` to provide relative pathes to images and masks folders and destination folder where generated pairs will be stored as JSON files. Then run `src/prepare.py`
+
+## Training 
+Make changes to `train_config.json` to provide pathes to train and val pairs and other settings such as batch size, epochs etc.
+Then run `src/train.py` to start training process, JSON file with training results will be generated and weights will be saved according to config file.
+
+## Evaluation
+Make changes to `eval_config.json` to provide required evaluation information and run `src/evaluate.py`. JSON file with evaluation results and figures with ROC and PR curves will be generated according to config file.
