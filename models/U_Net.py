@@ -43,7 +43,7 @@ def UpBlock(prev_layer_input, skip_layer_input, n_filters_transpose, n_filters):
     return next_layer
   
   
-def DenseUnet(input_shape, n_classes, n_filters=64):
+def DenseUnet(input_shape, n_filters=64):
     inputs = Input(input_shape)
     
     cblock1 = DownBlock(inputs, n_filters)
@@ -58,7 +58,7 @@ def DenseUnet(input_shape, n_classes, n_filters=64):
     ublock9 = UpBlock(ublock8, cblock2[1],  n_filters * 2, n_filters)
     ublock10 = UpBlock(ublock9, cblock1[1],  n_filters, n_filters)
 
-    conv10 = Conv2D(n_classes, 3, padding='same', activation="softmax")(ublock10)
+    conv10 = Conv2D(1, 3, padding='same', activation="sigmoid")(ublock10)
     
     # Define the model
     model = Model(inputs=inputs, outputs=conv10)
