@@ -1,5 +1,4 @@
 {
-	"project_path": "D:/facade-segmentation",
 	"images_folder": "data/images",
 	"masks_folder":  "data/masks",
 	"train_pairs_path": "data/train_pairs.json",

@@ -1,5 +1,4 @@
 {
-	"project_path": "D:/facade-segmentation",
 	"input_shape": [512, 512],
 	"train_pairs_path": "data/train_pairs.json",
 	"val_pairs_path": "data/val_pairs.json",
