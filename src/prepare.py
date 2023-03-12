@@ -3,20 +3,20 @@ import os
 import sys
 from sklearn.model_selection import train_test_split
 
-os.chdir("../")  # move back to project's root
+root = os.getcwd()  # get path to root
 
 with open("prepare_config.json", "r") as f:  # load config file
     config = json.load(f)
     
-root = os.getcwd()  # get path to root
+
 utils_path = os.path.join(root, "utils/")  # get path to utils
 
 sys.path.append(utils_path)  # append to sys path
 
 from utils import get_img_mask_pairs  # import function from utils
 
-img_folder = os.path.join(root, config["images_folder"])  # get pathes to img
-mask_folder = os.path.join(root, config["masks_folder"])  # and masks
+img_folder = config["images_folder"]  # get pathes to img
+mask_folder = config["masks_folder"]  # and masks
 # get train and val pairs
 train_pairs, val_pairs = get_img_mask_pairs(img_folder,
                                             mask_folder, 

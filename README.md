@@ -18,4 +18,5 @@ Make changes to `train_config.json` to provide pathes to train and val pairs and
 Then run `src/train.py` to start training process, JSON file with training results will be generated and weights will be saved according to config file.
 
 ## Evaluation
-Make changes to `eval_config.json` to provide required evaluation information and run `src/evaluate.py`. JSON file with evaluation results and figures with ROC and PR curves will be generated according to config file.
+Make changes to `eval_config.json` to provide required evaluation information and run `src/evaluate.py`. 
+JSON file with evaluation results and figures with ROC and PR curves will be generated according to config file.

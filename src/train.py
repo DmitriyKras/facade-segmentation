@@ -3,7 +3,7 @@ import os
 import sys
 import tensorflow as tf
 
-os.chdir("../")  # move back to project's root
+
 
 with open("train_config.json", "r") as f:  # load config file
     config = json.load(f)
@@ -88,6 +88,11 @@ print("Training completed\n")
 # save results
 log_path = os.path.join(config["train_log_folder"], "train_result.json")
 with open(log_path, "w") as f:
-    f.write(json.dump(history.history))
+    json.dump(history.history, f)
 
 print("History saved\n")
+
+save_path = config["weights_save_path"]
+model.save_weights(save_path)
+
+print("Weights saved\n")
