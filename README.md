@@ -11,7 +11,7 @@ mkdir weights
 mkdir weights/checkpoint
 ```
 ## Project overview
-Config files `prepare_config.json`, `train_config.json` and `evaluate_config.json` contain all important params such as pathes, training settings etc for experiment process. Modify them according to provide information you need. Note: all pathes are relative to project's root folder. `utils` and `models` folders contain py files for training, data preparation and model building. `src` folder contains all files for experiment such as `src/prepare.py`, `src/train.py` and `src/evaluate.py`. `data` folder used to store processed train, val and test pairs.
+Config files `prepare_config.json`, `train_config.json` and `evaluate_config.json` contain all important params such as pathes, training settings etc for experiment process. Modify them according to provide information you need. Note: all pathes are relative to project's root folder. `utils` and `models` folders contain py files for training, data preparation and model building. `src` folder contains all files for experiment such as `src/prepare.py`, `src/train.py` and `src/evaluate.py`. `pairs` folder used to store processed train, val and test pairs.
 By default weights saved after training and used for evaluation stored in `weights`, weights saved during training stored in `weights/checkpoint`.
 Resulting JSON files with training and evaluation results stored in `results/training` and `results/evaluation` respectively, figures with PR and ROC curves stored as PNG in `results/evaluation`.
 

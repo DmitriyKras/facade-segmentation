@@ -1,7 +1,7 @@
 {
 	"images_folder": "/content/drive/MyDrive/CMP_dataset_processed/images",
 	"masks_folder":  "/content/drive/MyDrive/CMP_dataset_processed/masks",
-	"train_pairs_path": "data/train_pairs.json",
-	"val_pairs_path": "data/val_pairs.json",
-	"test_pairs_path": "data/test_pairs.json"
+	"train_pairs_path": "pairs/train_pairs.json",
+	"val_pairs_path": "pairs/val_pairs.json",
+	"test_pairs_path": "pairs/test_pairs.json"
 }

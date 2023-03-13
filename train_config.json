@@ -1,7 +1,7 @@
 {
 	"input_shape": [512, 512],
-	"train_pairs_path": "data/train_pairs.json",
-	"val_pairs_path": "data/val_pairs.json",
+	"train_pairs_path": "pairs/train_pairs.json",
+	"val_pairs_path": "pairs/val_pairs.json",
 	"epochs": 1,
 	"batch_size": 2,
 	"train_steps": 5,

@@ -1,8 +1,9 @@
 {
 	"input_shape": [512, 512],
-	"pairs_path": "data/test_pairs.json",
+	"pairs_path": "pairs/test_pairs.json",
 	"weights_path": "weights/eval_weights.h5",
 	"plot_ROC": 1,
 	"plot_PR": 1,
-	"evaluate_log_folder":"results/evaluation"
+	"evaluate_log_folder":"results/evaluation",
+	"threshold": 0.5
 }
