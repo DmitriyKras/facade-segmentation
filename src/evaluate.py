@@ -40,24 +40,26 @@ for pair in tqdm(eval_pairs, total=len(eval_pairs),
     img = cv2.imread(pair[0])  # load image
     # resize image to input shape
     img = cv2.resize(img, tuple(config["input_shape"])) / 255 
-    pred = model.predict(np.expand_dims(img, axis=0))  # get prediction
+    pred = model.predict(np.expand_dims(img, axis=0),
+                         verbose=0)  # get prediction
     mask = cv2.imread(pair[1], 0) / 255  # load mask
     # resize mask to input shape
-    mask = cv2.resize(img, tuple(config["input_shape"]),
+    mask = cv2.resize(mask, tuple(config["input_shape"]),
                       interpolation=cv2.INTER_NEAREST)
     # stack predictions and masks
     y_true.append(mask)
-    y_pred.append(pred)
+    y_pred.append(np.squeeze(pred))
 
 # convert to ndarray and flat
-y_true = np.array(y_true).flatten()
+y_true = np.array(y_true).flatten().astype(int)
 y_pred = np.array(y_pred).flatten()
 
 metrics = {}
 # compute precision, recall and f-score
-metrics["precision"] = precision_score(y_true, (y_pred > config["threshold"]) * 1)
-metrics["recall"] = recall_score(y_true, (y_pred > config["threshold"]) * 1)
-metrics["f-score"] = f1_score(y_true, (y_pred > config["threshold"]) * 1)
+metrics["precision"] = precision_score(y_true, (y_pred > config["threshold"]).astype(int))
+metrics["recall"] = recall_score(y_true, (y_pred > config["threshold"]).astype(int))
+metrics["f-score"] = f1_score(y_true, (y_pred > config["threshold"]).astype(int))
+
 
 #compute AP and AUC
 metrics["AP-score"] = average_precision_score(y_true, y_pred)

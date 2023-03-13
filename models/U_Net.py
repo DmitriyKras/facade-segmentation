@@ -51,9 +51,9 @@ def DenseUnet(input_shape, n_filters=64):
     cblock3 = DownBlock(cblock2[0], n_filters*4)
 
     
-    ublock4 = UpBlock(cblock3[0], cblock3[1],  n_filters * 8, n_filters * 8)
-    ublock5 = UpBlock(ublock4, cblock2[1],  n_filters * 8, n_filters * 4)
-    ublock6 = UpBlock(ublock5, cblock1[1],  n_filters * 4, n_filters * 2)
+    ublock4 = UpBlock(cblock3[0], cblock3[1],  n_filters * 4, n_filters * 4)
+    ublock5 = UpBlock(ublock4, cblock2[1],  n_filters * 2, n_filters * 2)
+    ublock6 = UpBlock(ublock5, cblock1[1],  n_filters * 2, n_filters)
     
 
     conv10 = Conv2D(1, 3, padding='same', activation="sigmoid")(ublock6)

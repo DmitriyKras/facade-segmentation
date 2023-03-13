@@ -20,6 +20,7 @@ sys.path.append(models_path)  # append to sys path
 from U_Net import DenseUnet  # import Unet model
 
 # load train and val pairs, set up generators
+print("Loading train and val pairs... \n")
 train_path = os.path.join(root, config["train_pairs_path"])
 val_path = os.path.join(root, config["val_pairs_path"])
 with open(train_path, "r") as f:  # load train pairs
@@ -38,6 +39,7 @@ val_gen = DataGenerator(val_pairs,
                         config["val_steps"]
                         )
 
+print("Data loaded successfully\n")
 # set up metrics
 metrics = []
 for metric in config["metrics"]:
@@ -49,6 +51,7 @@ for metric in config["metrics"]:
         metrics.append(metric)
 
 # build and compile model
+print("Building and compiling model...\n")
 model = DenseUnet(tuple(config["input_shape"]) + (3,))  # build model
 
 if config["loss"] == "focal_binary_crossentropy":
@@ -76,7 +79,9 @@ if config["checkpoint"] == 1:
                                  verbose=1, period=5)
     callbacks_list = [checkpoint]
 
+print("Model built and compiled successfully\n")
 # fit model
+print("Starting training...\n")
 start = timeit.default_timer()
 
 history = model.fit(
@@ -89,8 +94,9 @@ history = model.fit(
 
 total_time = timeit.default_timer() - start
 print("Training completed\n")
-print("Total time: ", total_time)
+print("Total time: ", total_time, '\n')
 # save results
+print("Saving results...\n")
 log = history.history
 log["training_time"] = total_time
 log_path = os.path.join(config["train_log_folder"], "train_result.json")
