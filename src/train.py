@@ -2,6 +2,7 @@ import json
 import os
 import sys
 import tensorflow as tf
+import timeit 
 
 
 
@@ -76,6 +77,8 @@ if config["checkpoint"] == 1:
     callbacks_list = [checkpoint]
 
 # fit model
+start = timeit.default_timer()
+
 history = model.fit(
     train_gen,
     steps_per_epoch=config["train_steps"],
@@ -84,11 +87,15 @@ history = model.fit(
     callbacks=callbacks_list
     )
 
+total_time = timeit.default_timer() - start
 print("Training completed\n")
+print("Total time: ", total_time)
 # save results
+log = history.history
+log["training_time"] = total_time
 log_path = os.path.join(config["train_log_folder"], "train_result.json")
 with open(log_path, "w") as f:
-    json.dump(history.history, f)
+    json.dump(log, f)
 
 print("History saved\n")
 
