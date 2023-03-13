@@ -7,9 +7,8 @@ I used [CMP Facade Dataset](https://cmp.felk.cvut.cz/~tylecr1/facade/) for this 
 cd your_path
 git clone https://github.com/DmitriyKras/facade-segmentation.git
 cd facade-segmentation
+mkdir weights
 mkdir weights/checkpoint
-mkdir results/training
-mkdir results/evaluation
 ```
 ## Project overview
 Config files `prepare_config.json`, `train_config.json` and `evaluate_config.json` contain all important params such as pathes, training settings etc for experiment process. Modify them according to provide information you need. Note: all pathes are relative to project's root folder. `utils` and `models` folders contain py files for training, data preparation and model building. `src` folder contains all files for experiment such as `src/prepare.py`, `src/train.py` and `src/evaluate.py`. `data` folder used to store processed train, val and test pairs.
