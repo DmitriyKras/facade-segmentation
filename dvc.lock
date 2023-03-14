@@ -41,7 +41,7 @@ stages:
         checkpoint: 0
         checkpoint_folder: weights/checkpoint
         device: GPU
-        epochs: 2
+        epochs: 20
         input_shape:
         - 256
         - 256
@@ -61,10 +61,10 @@ stages:
         weights_save_path: weights/eval_weights.h5
     outs:
     - path: results/training/train_result.json
-      md5: e6011b01a044ad2551eea8648c01f585
-      size: 478
+      md5: 8c9fac7294432db1c17c870b1eca5596
+      size: 3367
     - path: weights/eval_weights.h5
-      md5: 42d5d87d3edb99447ea05081118999cf
+      md5: a33986e3e5da4f00b2dea2e3cfc2679b
       size: 22356264
   evaluate:
     cmd: python src/evaluate.py
@@ -76,7 +76,7 @@ stages:
       md5: b9bf6ace3d574b668e6b19b35388ea98
       size: 3328
     - path: weights/eval_weights.h5
-      md5: 42d5d87d3edb99447ea05081118999cf
+      md5: a33986e3e5da4f00b2dea2e3cfc2679b
       size: 22356264
     params:
       evaluate_config.json:
@@ -92,11 +92,11 @@ stages:
         weights_path: weights/eval_weights.h5
     outs:
     - path: results/evaluation/PR_curve.png
-      md5: 4105b32cff01701061ccf6d28abe7d88
-      size: 18556
+      md5: 9e387d3f88d6ab58c2cb632988239e6d
+      size: 19479
     - path: results/evaluation/ROC_curve.png
-      md5: 9840b4aaf7be31a7593747fb47eafb3c
-      size: 21269
+      md5: db744d0486c01e220302999eadc6d644
+      size: 19322
     - path: results/evaluation/eval_log.json
-      md5: a8c8ab19d1eb8ae0926a708df8be2af9
-      size: 197
+      md5: 1dabd2b8fb3df7ca3c52f166c3708274
+      size: 193
