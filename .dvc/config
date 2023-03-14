@@ -1,4 +1,6 @@
 [core]
-    remote = remote
+    remote = myremote
 ['remote "remote"']
     url = gdrive://1G35A6GzJQ9xYqRbugtg4oTsEq4nibz-p
+['remote "myremote"']
+    url = /content/drive/MyDrive/CMP_dataset_processed/
