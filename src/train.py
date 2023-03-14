@@ -1,13 +1,17 @@
 import json
 import os
 import sys
-import tensorflow as tf
 import timeit 
 
 
 
 with open("train_config.json", "r") as f:  # load config file
     config = json.load(f)
+
+if config["device"] == "CPU":
+    os.os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+    
+import tensorflow as tf
 
 root = os.getcwd()  # get path to root
 
@@ -84,8 +88,7 @@ print("Model built and compiled successfully\n")
 print("Starting training...\n")
 start = timeit.default_timer()
 
-with tf.device(tf.config.list_physical_devices(config["device"])[0].name):
-    history = model.fit(
+history = model.fit(
         train_gen,
         steps_per_epoch=config["train_steps"],
         epochs=config["epochs"],

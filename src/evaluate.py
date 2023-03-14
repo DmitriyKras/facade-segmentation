@@ -13,6 +13,9 @@ from sklearn.metrics import average_precision_score, roc_auc_score
 with open("evaluate_config.json", "r") as f:  # load config file
     config = json.load(f)
 
+if config["device"] == "CPU":
+    os.os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
 root = os.getcwd()  # get path to root
 
 models_path = os.path.join(root, "models/")  # get path to models
@@ -40,8 +43,7 @@ for pair in tqdm(eval_pairs, total=len(eval_pairs),
     img = cv2.imread(pair[0])  # load image
     # resize image to input shape
     img = cv2.resize(img, tuple(config["input_shape"])) / 255
-    with tf.device(tf.config.list_physical_devices(config["device"])[0].name):
-        pred = model.predict(np.expand_dims(img, axis=0),
+    pred = model.predict(np.expand_dims(img, axis=0),
                              verbose=0)  # get prediction
     mask = cv2.imread(pair[1], 0) / 255  # load mask
     # resize mask to input shape
