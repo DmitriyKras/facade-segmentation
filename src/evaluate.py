@@ -39,9 +39,10 @@ for pair in tqdm(eval_pairs, total=len(eval_pairs),
                  desc="Collecting predictions..."):
     img = cv2.imread(pair[0])  # load image
     # resize image to input shape
-    img = cv2.resize(img, tuple(config["input_shape"])) / 255 
-    pred = model.predict(np.expand_dims(img, axis=0),
-                         verbose=0)  # get prediction
+    img = cv2.resize(img, tuple(config["input_shape"])) / 255
+    with tf.device(tf.config.list_physical_devices(config["device"])[0].name):
+        pred = model.predict(np.expand_dims(img, axis=0),
+                             verbose=0)  # get prediction
     mask = cv2.imread(pair[1], 0) / 255  # load mask
     # resize mask to input shape
     mask = cv2.resize(mask, tuple(config["input_shape"]),

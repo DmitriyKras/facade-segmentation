@@ -84,13 +84,14 @@ print("Model built and compiled successfully\n")
 print("Starting training...\n")
 start = timeit.default_timer()
 
-history = model.fit(
-    train_gen,
-    steps_per_epoch=config["train_steps"],
-    epochs=config["epochs"],
-    validation_data=val_gen,
-    callbacks=callbacks_list
-    )
+with tf.device(tf.config.list_physical_devices(config["device"])[0].name):
+    history = model.fit(
+        train_gen,
+        steps_per_epoch=config["train_steps"],
+        epochs=config["epochs"],
+        validation_data=val_gen,
+        callbacks=callbacks_list
+        )
 
 total_time = timeit.default_timer() - start
 print("Training completed\n")
