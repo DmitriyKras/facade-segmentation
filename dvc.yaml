@@ -6,9 +6,12 @@ stages:
     params:
     - prepare_config.json:
     outs:
-    - pairs/test_pairs.json
-    - pairs/train_pairs.json
-    - pairs/val_pairs.json
+    - pairs/test_pairs.json:
+        cache: false
+    - pairs/train_pairs.json:
+        cache: false
+    - pairs/val_pairs.json:
+        cache: false
   train:
     cmd: python src/train.py
     deps:
@@ -20,9 +23,10 @@ stages:
     outs:
     - weights/eval_weights.h5
     metrics:
-    - results/training/train_result.json
+    - results/training/train_result.json:
+        cache: false
   evaluate:
-    cmd: results/evaluation/PR_curve.png -o results/evaluation/ROC_curve.png --force
+    cmd: results/evaluation/PR_curve.png -O results/evaluation/ROC_curve.png --force
       python src/evaluate.py
     deps:
     - pairs/test_pairs.json
@@ -31,4 +35,5 @@ stages:
     params:
     - evaluate_config.json:
     metrics:
-    - results/evaluation/evaluation_result.json-o
+    - results/evaluation/eval_log.json-O:
+        cache: false
