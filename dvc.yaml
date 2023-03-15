@@ -1,0 +1,39 @@
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+    - src/prepare.py
+    params:
+    - prepare_config.json:
+    outs:
+    - pairs/test_pairs.json:
+        cache: false
+    - pairs/train_pairs.json:
+        cache: false
+    - pairs/val_pairs.json:
+        cache: false
+  train:
+    cmd: python src/train.py
+    deps:
+    - pairs/train_pairs.json
+    - pairs/val_pairs.json
+    - src/train.py
+    params:
+    - train_config.json:
+    outs:
+    - weights/eval_weights.h5
+    metrics:
+    - results/training/train_result.json:
+        cache: false
+  evaluate:
+    cmd: results/evaluation/PR_curve.png -O results/evaluation/ROC_curve.png --force
+      python src/evaluate.py
+    deps:
+    - pairs/test_pairs.json
+    - src/evaluate.py
+    - weights/eval_weights.h5
+    params:
+    - evaluate_config.json:
+    metrics:
+    - results/evaluation/eval_log.json-O:
+        cache: false
