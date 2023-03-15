@@ -1,0 +1,102 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+    - path: src/prepare.py
+      md5: 27960000b763f0ac14992acf76f0e699
+      size: 1291
+    params:
+      prepare_config.json:
+        images_folder: data/images
+        masks_folder: data/masks
+        test_pairs_path: pairs/test_pairs.json
+        train_pairs_path: pairs/train_pairs.json
+        val_pairs_path: pairs/val_pairs.json
+    outs:
+    - path: pairs/test_pairs.json
+      md5: 77be0e9a9d74a4781f95b87580a1a3d4
+      size: 2891
+    - path: pairs/train_pairs.json
+      md5: b1f86263cd171afcb449a5d66ab7ac64
+      size: 25665
+    - path: pairs/val_pairs.json
+      md5: f94d5c63bb579df73938e2b2e1fc8ef3
+      size: 7198
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: pairs/train_pairs.json
+      md5: b1f86263cd171afcb449a5d66ab7ac64
+      size: 25665
+    - path: pairs/val_pairs.json
+      md5: f94d5c63bb579df73938e2b2e1fc8ef3
+      size: 7198
+    - path: src/train.py
+      md5: 88fa36776394579312ec684e3bf98b81
+      size: 3450
+    params:
+      train_config.json:
+        batch_size: 2
+        checkpoint: 0
+        checkpoint_folder: weights/checkpoint
+        device: GPU
+        epochs: 2
+        input_shape:
+        - 256
+        - 256
+        load_weights: 0
+        loss: binary_crossentropy
+        metrics:
+        - accuracy
+        - precision
+        - recall
+        optimizer: adam
+        train_log_folder: results/training
+        train_pairs_path: pairs/train_pairs.json
+        train_steps: 100
+        val_pairs_path: pairs/val_pairs.json
+        val_steps: 20
+        weights_load_path: weights/train_weights.h5
+        weights_save_path: weights/eval_weights.h5
+    outs:
+    - path: results/training/train_result.json
+      md5: c7ecf53e5cbeecc454a296a324a43106
+      size: 477
+    - path: weights/eval_weights.h5
+      md5: d4fefc95f147fb192f58102ae80f1434
+      size: 22356264
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - path: pairs/test_pairs.json
+      md5: 77be0e9a9d74a4781f95b87580a1a3d4
+      size: 2891
+    - path: src/evaluate.py
+      md5: b9bf6ace3d574b668e6b19b35388ea98
+      size: 3328
+    - path: weights/eval_weights.h5
+      md5: d4fefc95f147fb192f58102ae80f1434
+      size: 22356264
+    params:
+      evaluate_config.json:
+        device: GPU
+        evaluate_log_folder: results/evaluation
+        input_shape:
+        - 256
+        - 256
+        pairs_path: pairs/test_pairs.json
+        plot_PR: 1
+        plot_ROC: 1
+        threshold: 0.5
+        weights_path: weights/eval_weights.h5
+    outs:
+    - path: results/evaluation/PR_curve.png
+      md5: 66d1d4b23d22d6faab88d3ab7c96cb41
+      size: 18722
+    - path: results/evaluation/ROC_curve.png
+      md5: e37fe4d61e5529ab2cc2934b450c6322
+      size: 21181
+    - path: results/evaluation/eval_log.json
+      md5: 55c6784e1835421010ff8d54c5d28027
+      size: 195
