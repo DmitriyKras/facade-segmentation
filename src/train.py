@@ -3,6 +3,7 @@ import os
 import sys
 import timeit
 import tf2onnx
+import onnx
 
 
 
@@ -111,6 +112,7 @@ with open(log_path, "w") as f:
 print("History saved\n")
 
 save_path = config["weights_save_path"]
-model.save_weights(save_path)
+onnx_model, _ = tf2onnx.convert.from_keras(model)
+onnx.save(onnx_model, save_path)
 
 print("Weights saved\n")
