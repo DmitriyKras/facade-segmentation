@@ -14,7 +14,7 @@ with open("evaluate_config.json", "r") as f:  # load config file
     config = json.load(f)
 
 if config["device"] == "CPU":
-    os.os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 root = os.getcwd()  # get path to root
 
