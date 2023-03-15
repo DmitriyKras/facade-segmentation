@@ -15,22 +15,22 @@ stages:
         val_pairs_path: pairs/val_pairs.json
     outs:
     - path: pairs/test_pairs.json
-      md5: 5f3e8a48f9002e3ed6d3d44a9c85eb97
+      md5: ecd8c66e594e2e2f987f14c9c8d60709
       size: 2891
     - path: pairs/train_pairs.json
-      md5: 2297aaf7e410ea334e7a5cb863aab1b8
+      md5: 9f8bc8e88c3688f7d6fe7ff5fa348e86
       size: 25665
     - path: pairs/val_pairs.json
-      md5: 8d9e135c104cfe681568356db97a9279
+      md5: c1cbf4b7052a031b2538566b91946d91
       size: 7198
   train:
     cmd: python src/train.py
     deps:
     - path: pairs/train_pairs.json
-      md5: 2297aaf7e410ea334e7a5cb863aab1b8
+      md5: 9f8bc8e88c3688f7d6fe7ff5fa348e86
       size: 25665
     - path: pairs/val_pairs.json
-      md5: 8d9e135c104cfe681568356db97a9279
+      md5: c1cbf4b7052a031b2538566b91946d91
       size: 7198
     - path: src/train.py
       md5: 88fa36776394579312ec684e3bf98b81
@@ -41,7 +41,7 @@ stages:
         checkpoint: 0
         checkpoint_folder: weights/checkpoint
         device: GPU
-        epochs: 2
+        epochs: 20
         input_shape:
         - 256
         - 256
@@ -61,22 +61,22 @@ stages:
         weights_save_path: weights/eval_weights.h5
     outs:
     - path: results/training/train_result.json
-      md5: 24556141fa6951b60c8e42b131a218bb
-      size: 476
+      md5: 8c9fac7294432db1c17c870b1eca5596
+      size: 3367
     - path: weights/eval_weights.h5
-      md5: 10f9f475f016d4216fae7c01de44e138
+      md5: a33986e3e5da4f00b2dea2e3cfc2679b
       size: 22356264
   evaluate:
     cmd: python src/evaluate.py
     deps:
     - path: pairs/test_pairs.json
-      md5: 5f3e8a48f9002e3ed6d3d44a9c85eb97
+      md5: ecd8c66e594e2e2f987f14c9c8d60709
       size: 2891
     - path: src/evaluate.py
       md5: b9bf6ace3d574b668e6b19b35388ea98
       size: 3328
     - path: weights/eval_weights.h5
-      md5: 10f9f475f016d4216fae7c01de44e138
+      md5: a33986e3e5da4f00b2dea2e3cfc2679b
       size: 22356264
     params:
       evaluate_config.json:
@@ -92,11 +92,11 @@ stages:
         weights_path: weights/eval_weights.h5
     outs:
     - path: results/evaluation/PR_curve.png
-      md5: cced52cfa517e82b2bf325c3f0598ed7
-      size: 18902
+      md5: 9e387d3f88d6ab58c2cb632988239e6d
+      size: 19479
     - path: results/evaluation/ROC_curve.png
-      md5: eb14c710aea5f4ccf3377e9d89a19430
-      size: 21464
+      md5: db744d0486c01e220302999eadc6d644
+      size: 19322
     - path: results/evaluation/eval_log.json
-      md5: d11b0b5d42a1fad04990e510f5fcd9c6
-      size: 198
+      md5: 1dabd2b8fb3df7ca3c52f166c3708274
+      size: 193
