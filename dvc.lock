@@ -15,22 +15,22 @@ stages:
         val_pairs_path: pairs/val_pairs.json
     outs:
     - path: pairs/test_pairs.json
-      md5: 9f45b007be2bf283c2e92e3341572ec0
+      md5: e2dd394df3f1fb649595b2cabc6d97cb
       size: 2891
     - path: pairs/train_pairs.json
-      md5: ab027e7e996b9342b05eccdf376bacb9
+      md5: 8f1444bb0fed91f455a8c292893969bb
       size: 25665
     - path: pairs/val_pairs.json
-      md5: 2b5a3587abd92bafd6db3d7626d24459
+      md5: 4fc463bcfb9f1b741cfcd838b7223776
       size: 7198
   train:
     cmd: python src/train.py
     deps:
     - path: pairs/train_pairs.json
-      md5: ab027e7e996b9342b05eccdf376bacb9
+      md5: 8f1444bb0fed91f455a8c292893969bb
       size: 25665
     - path: pairs/val_pairs.json
-      md5: 2b5a3587abd92bafd6db3d7626d24459
+      md5: 4fc463bcfb9f1b741cfcd838b7223776
       size: 7198
     - path: src/train.py
       md5: 5fac19e986ca610f04d717c0b3d467bc
@@ -54,29 +54,29 @@ stages:
         optimizer: adam
         train_log_folder: results/training
         train_pairs_path: pairs/train_pairs.json
-        train_steps: 100
+        train_steps: 10
         val_pairs_path: pairs/val_pairs.json
-        val_steps: 20
+        val_steps: 2
         weights_load_path: weights/train_weights.h5
         weights_save_path: weights/eval_weights.h5
     outs:
     - path: results/training/train_result.json
-      md5: 4fe4d99113c76264197c27c3f207cb47
-      size: 472
+      md5: ff451e337590f64898d94c82a1b7a35a
+      size: 416
     - path: weights/eval_weights.h5
-      md5: eb0856df374abefc91a42d1b936c3600
+      md5: dc1b08d4ab96399057f932c4a5bd062d
       size: 22356264
   evaluate:
     cmd: python src/evaluate.py
     deps:
     - path: pairs/test_pairs.json
-      md5: 9f45b007be2bf283c2e92e3341572ec0
+      md5: e2dd394df3f1fb649595b2cabc6d97cb
       size: 2891
     - path: src/evaluate.py
       md5: b346ecc4d0007c57192fd907f5413148
       size: 3325
     - path: weights/eval_weights.h5
-      md5: eb0856df374abefc91a42d1b936c3600
+      md5: dc1b08d4ab96399057f932c4a5bd062d
       size: 22356264
     params:
       evaluate_config.json:
@@ -92,11 +92,11 @@ stages:
         weights_path: weights/eval_weights.h5
     outs:
     - path: results/evaluation/PR_curve.png
-      md5: 2da1b1cc21bb9597f6de1480fca9e082
-      size: 18888
+      md5: f919ecd1e87a6864d2b97d2729eb5ab4
+      size: 16890
     - path: results/evaluation/ROC_curve.png
-      md5: f6480b0efdcce40dcaacc11a9e24ffa2
-      size: 20935
+      md5: a13e01fc0f68afab9cd3e7cc503db4e6
+      size: 22278
     - path: results/evaluation/eval_log.json
-      md5: 1ca9cde2d5356603409caec7e58bbc28
-      size: 196
+      md5: 0ff25b61d2fc3fb60ded1a0ea629a508
+      size: 201
