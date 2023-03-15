@@ -33,14 +33,14 @@ stages:
       md5: 2b5a3587abd92bafd6db3d7626d24459
       size: 7198
     - path: src/train.py
-      md5: 88fa36776394579312ec684e3bf98b81
-      size: 3450
+      md5: 5fac19e986ca610f04d717c0b3d467bc
+      size: 3447
     params:
       train_config.json:
         batch_size: 2
         checkpoint: 0
         checkpoint_folder: weights/checkpoint
-        device: GPU
+        device: CPU
         epochs: 2
         input_shape:
         - 256
@@ -61,10 +61,10 @@ stages:
         weights_save_path: weights/eval_weights.h5
     outs:
     - path: results/training/train_result.json
-      md5: 13e2ccee93d934813c9a11ca3f05f18c
-      size: 475
+      md5: 4fe4d99113c76264197c27c3f207cb47
+      size: 472
     - path: weights/eval_weights.h5
-      md5: f9a625fcfc000da3b7c7f2049ee2f4e4
+      md5: eb0856df374abefc91a42d1b936c3600
       size: 22356264
   evaluate:
     cmd: python src/evaluate.py
@@ -73,14 +73,14 @@ stages:
       md5: 9f45b007be2bf283c2e92e3341572ec0
       size: 2891
     - path: src/evaluate.py
-      md5: b9bf6ace3d574b668e6b19b35388ea98
-      size: 3328
+      md5: b346ecc4d0007c57192fd907f5413148
+      size: 3325
     - path: weights/eval_weights.h5
-      md5: f9a625fcfc000da3b7c7f2049ee2f4e4
+      md5: eb0856df374abefc91a42d1b936c3600
       size: 22356264
     params:
       evaluate_config.json:
-        device: GPU
+        device: CPU
         evaluate_log_folder: results/evaluation
         input_shape:
         - 256
@@ -92,11 +92,11 @@ stages:
         weights_path: weights/eval_weights.h5
     outs:
     - path: results/evaluation/PR_curve.png
-      md5: 58cd93cfb90f0518f5270ad20313608f
-      size: 18614
+      md5: 2da1b1cc21bb9597f6de1480fca9e082
+      size: 18888
     - path: results/evaluation/ROC_curve.png
-      md5: dc472d993b905ce8d7522123097dc6a4
-      size: 20756
+      md5: f6480b0efdcce40dcaacc11a9e24ffa2
+      size: 20935
     - path: results/evaluation/eval_log.json
-      md5: d8cf4c0cabc15b90d5523b0f7d3285ff
+      md5: 1ca9cde2d5356603409caec7e58bbc28
       size: 196
