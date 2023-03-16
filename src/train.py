@@ -112,7 +112,10 @@ with open(log_path, "w") as f:
 print("History saved\n")
 
 save_path = config["weights_save_path"]
-onnx_model, _ = tf2onnx.convert.from_keras(model)
+input_signature = [tf.TensorSpec((1,) + tuple(config["input_shape"]) + (3,), 
+name="input")]
+onnx_model, _ = tf2onnx.convert.from_keras(model, input_signature=input_signature)
 onnx.save(onnx_model, save_path)
 
 print("Weights saved\n")
+

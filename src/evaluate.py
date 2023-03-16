@@ -15,16 +15,17 @@ import onnxruntime as ort
 with open("evaluate_config.json", "r") as f:  # load config file
     config = json.load(f)
 
-if config["device"] == "CPU":
-    providers = ['CPUExecutionProvider']
-else:
-    providers = ['GPUExecutionProvider']
 
 root = os.getcwd()  # get path to root
 
+if config["device"] == "CPU":
+    providers = ["CPUExecutionProvider"]
+else:
+    providers = ["CUDAExecutionProvider", "CPUExecutionProvider"]
+
 # load model for evaluating
 # model = onnx.load(os.path.join(root, config["weights_path"]))
-ort_session = ort.InferenceSession(os.path.join(root, config["weights_path"]), 
+ort_session = ort.InferenceSession(os.path.join(root, config["weights_path"]),
 providers=providers)
 
 # load evaluating pairs
@@ -42,7 +43,8 @@ for pair in tqdm(eval_pairs, total=len(eval_pairs),
     img = cv2.imread(pair[0])  # load image
     # resize image to input shape
     img = cv2.resize(img, tuple(config["input_shape"])) / 255
-    pred = ort_session.run(None, img)  # get prediction
+    pred = ort_session.run(None, 
+    {"input" : np.expand_dims(img.astype(np.float32), axis=0)})  # get prediction
     mask = cv2.imread(pair[1], 0) / 255  # load mask
     # resize mask to input shape
     mask = cv2.resize(mask, tuple(config["input_shape"]),
@@ -93,3 +95,4 @@ metrics["eval_time"] = total_time
 
 with open(os.path.join(eval_log_path, "eval_log.json"), "w") as f:
     json.dump(metrics, f)
+    
