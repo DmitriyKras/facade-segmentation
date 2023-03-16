@@ -9,6 +9,8 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import precision_score, recall_score, f1_score
 from sklearn.metrics import precision_recall_curve, roc_curve
 from sklearn.metrics import average_precision_score, roc_auc_score
+import onnx
+import onnxruntime as ort
 
 with open("evaluate_config.json", "r") as f:  # load config file
     config = json.load(f)
@@ -18,15 +20,9 @@ if config["device"] == "CPU":
 
 root = os.getcwd()  # get path to root
 
-models_path = os.path.join(root, "models/")  # get path to models
-sys.path.append(models_path)  # append to sys path
-from U_Net import DenseUnet  # import Unet model
-
-# build model
-model = DenseUnet(tuple(config["input_shape"]) + (3,))  # build model
-
-# load weiths for evaluating
-model.load_weights(os.path.join(root, config["weights_path"]))
+# load model for evaluating
+model = onnx.load(os.path.join(root, config["weights_path"]))
+ort_session = ort.InferenceSession(os.path.join(root, config["weights_path"]))
 
 # load evaluating pairs
 eval_path = os.path.join(root, config["pairs_path"])  # get path for eval pairs
