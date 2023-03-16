@@ -21,7 +21,7 @@ stages:
     params:
     - train_config.json:
     outs:
-    - weights/eval_weights.h5
+    - weights/eval_model.onnx
     metrics:
     - results/training/train_result.json:
         cache: false
@@ -30,7 +30,7 @@ stages:
     deps:
     - pairs/test_pairs.json
     - src/evaluate.py
-    - weights/eval_weights.h5
+    - weights/eval_model.onnx
     params:
     - evaluate_config.json:
     metrics:
