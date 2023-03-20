@@ -15,26 +15,26 @@ stages:
         val_pairs_path: pairs/val_pairs.json
     outs:
     - path: pairs/test_pairs.json
-      md5: 77be0e9a9d74a4781f95b87580a1a3d4
+      md5: 653233a7de97d1b9b6c07bd4a0d36ec8
       size: 2891
     - path: pairs/train_pairs.json
-      md5: b1f86263cd171afcb449a5d66ab7ac64
+      md5: 3637cfe6fb20d37a2aea98f89faaa220
       size: 25665
     - path: pairs/val_pairs.json
-      md5: f94d5c63bb579df73938e2b2e1fc8ef3
+      md5: 527ac8d831f074c337793df779e05660
       size: 7198
   train:
     cmd: python src/train.py
     deps:
     - path: pairs/train_pairs.json
-      md5: b1f86263cd171afcb449a5d66ab7ac64
+      md5: 3637cfe6fb20d37a2aea98f89faaa220
       size: 25665
     - path: pairs/val_pairs.json
-      md5: f94d5c63bb579df73938e2b2e1fc8ef3
+      md5: 527ac8d831f074c337793df779e05660
       size: 7198
     - path: src/train.py
-      md5: 88fa36776394579312ec684e3bf98b81
-      size: 3450
+      md5: 946a5b6cfc6cf388af16c28a7fdd1e3a
+      size: 3653
     params:
       train_config.json:
         batch_size: 2
@@ -54,30 +54,30 @@ stages:
         optimizer: adam
         train_log_folder: results/training
         train_pairs_path: pairs/train_pairs.json
-        train_steps: 100
+        train_steps: 10
         val_pairs_path: pairs/val_pairs.json
-        val_steps: 20
+        val_steps: 2
         weights_load_path: weights/train_weights.h5
-        weights_save_path: weights/eval_weights.h5
+        weights_save_path: weights/eval_model.onnx
     outs:
     - path: results/training/train_result.json
-      md5: c7ecf53e5cbeecc454a296a324a43106
-      size: 477
-    - path: weights/eval_weights.h5
-      md5: d4fefc95f147fb192f58102ae80f1434
-      size: 22356264
+      md5: 15d4104a885c981dabd01ed8b627e2b3
+      size: 414
+    - path: weights/eval_model.onnx
+      md5: 186b34bb70e7bb8c6e7e53af3bdff700
+      size: 22110040
   evaluate:
     cmd: python src/evaluate.py
     deps:
     - path: pairs/test_pairs.json
-      md5: 77be0e9a9d74a4781f95b87580a1a3d4
+      md5: 653233a7de97d1b9b6c07bd4a0d36ec8
       size: 2891
     - path: src/evaluate.py
-      md5: b9bf6ace3d574b668e6b19b35388ea98
-      size: 3328
-    - path: weights/eval_weights.h5
-      md5: d4fefc95f147fb192f58102ae80f1434
-      size: 22356264
+      md5: 0cd92a1846b0a3c10f3e392929e49b59
+      size: 3287
+    - path: weights/eval_model.onnx
+      md5: 186b34bb70e7bb8c6e7e53af3bdff700
+      size: 22110040
     params:
       evaluate_config.json:
         device: GPU
@@ -89,14 +89,14 @@ stages:
         plot_PR: 1
         plot_ROC: 1
         threshold: 0.5
-        weights_path: weights/eval_weights.h5
+        weights_path: weights/eval_model.onnx
     outs:
     - path: results/evaluation/PR_curve.png
-      md5: 66d1d4b23d22d6faab88d3ab7c96cb41
-      size: 18722
+      md5: 6c2ae84304a5f8b015fad27b0b816e2b
+      size: 16697
     - path: results/evaluation/ROC_curve.png
-      md5: e37fe4d61e5529ab2cc2934b450c6322
-      size: 21181
+      md5: c73b9659ab224656105d4a32bbb091ff
+      size: 22244
     - path: results/evaluation/eval_log.json
-      md5: 55c6784e1835421010ff8d54c5d28027
-      size: 195
+      md5: cc9e137d67e65dfa833ef0c07efbf475
+      size: 152
